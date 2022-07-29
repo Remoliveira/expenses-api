@@ -9,6 +9,6 @@ export class AuthController {
   @Post('signin')
   async signIn(@Body() authDTO: AuthDTO) {
     console.log(authDTO);
-    return await this.authService.signIn();
+    return await this.authService.signIn(authDTO);
   }
 }
