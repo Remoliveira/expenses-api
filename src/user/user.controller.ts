@@ -28,4 +28,10 @@ export class UserController {
     const user = await this.userService.getUser(id);
     return user;
   }
+
+  @Get()
+  async getAllUsers() {
+    const user = await this.userService.getAllUsers();
+    return user;
+  }
 }

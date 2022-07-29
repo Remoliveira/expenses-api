@@ -8,10 +8,26 @@ services:
     environment: 
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: expenses
+      POSTGRES_DB: 
     networks:
       - app
+
+  onfly:
+        build: .
+        container_name: expenses_crud
+        ports:
+            - 3000:3000
+        volumes: 
+            - .:/usr/app
+        links:
+            - expenses-db
+        depends_on: 
+            - expenses-db
     
+
+volumes: 
+    pgdata:
+        driver: local
 
 networks:
   app:
