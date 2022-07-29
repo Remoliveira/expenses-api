@@ -1,8 +1,10 @@
 import {
   Body,
   Controller,
+  Get,
   HttpException,
   HttpStatus,
+  Param,
   Post,
 } from '@nestjs/common';
 import { UserDTO } from './dto';
@@ -19,5 +21,11 @@ export class UserController {
     } catch (error) {
       throw new HttpException('User already exist', HttpStatus.BAD_REQUEST);
     }
+  }
+
+  @Get(':id')
+  async getUser(@Param('id') id: string) {
+    const user = await this.userService.getUser(id);
+    console.log(user);
   }
 }

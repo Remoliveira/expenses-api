@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { User } from '@prisma/client';
 import { errorCode } from 'src/constants';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { UserDTO } from './dto';
@@ -19,6 +20,17 @@ export class UserService {
       if (error.code === errorCode.ALREADY_EXIST) {
         throw new Error();
       }
+    }
+  }
+
+  async getUser(id: string): Promise<User> {
+    try {
+      const user = await this.prisma.user.findUnique({
+        where: { id },
+      });
+      return user;
+    } catch (error) {
+      throw new Error();
     }
   }
 }
