@@ -18,7 +18,7 @@ export class UserService {
       });
     } catch (error) {
       if (error.code === errorCode.ALREADY_EXIST) {
-        throw new Error();
+        throw new Error(error);
       }
     }
   }
@@ -30,7 +30,7 @@ export class UserService {
       });
       return user;
     } catch (error) {
-      throw new Error();
+      throw new Error(error);
     }
   }
 }
