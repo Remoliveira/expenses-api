@@ -1,22 +1,33 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Expense } from '@prisma/client';
 import { errorCode } from 'src/constants';
+import { MailService } from 'src/mail/mail.service';
 
 import { PrismaService } from 'src/prisma/prisma.service';
+import { UserService } from 'src/user/user.service';
 import { ExpensesDTO, UpdateExpensesDTO } from './dto';
 
 @Injectable()
 export class ExpensesService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private mailService: MailService,
+    private userService: UserService,
+  ) {}
 
   async insertExpense(expenseDTO: ExpensesDTO) {
     try {
+      const user = await this.userService.getUser(expenseDTO.userId);
+
       await this.prisma.expense.create({
         data: {
           value: expenseDTO.value,
           userId: expenseDTO.userId,
+          description: expenseDTO.description,
         },
       });
+
+      return await this.mailService.sendConfirmationEmail(user);
     } catch (error) {
       throw new Error(error);
     }

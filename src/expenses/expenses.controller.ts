@@ -18,7 +18,8 @@ export class ExpensesController {
   @Post()
   async insertExpense(@Body() expenseDTO: ExpensesDTO) {
     try {
-      this.expensesService.insertExpense(expenseDTO);
+      const mailInfo = this.expensesService.insertExpense(expenseDTO);
+      return mailInfo;
     } catch (error) {
       throw new Error(error);
     }

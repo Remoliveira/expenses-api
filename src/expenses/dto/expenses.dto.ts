@@ -1,7 +1,14 @@
-import { IsNumber, IsPositive, IsString, IsUUID } from 'class-validator';
+import {
+  IsNumber,
+  IsPositive,
+  IsString,
+  IsUUID,
+  MaxLength,
+} from 'class-validator';
 
 class ExpensesDTO {
   @IsString()
+  @MaxLength(191)
   description: string;
 
   @IsUUID()

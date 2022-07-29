@@ -6,11 +6,13 @@ import {
   IsString,
   IsUUID,
   MaxDate,
+  MaxLength,
 } from 'class-validator';
 
 class UpdateExpensesDTO {
   @IsString()
   @IsOptional()
+  @MaxLength(191)
   description?: string;
 
   @IsUUID()
